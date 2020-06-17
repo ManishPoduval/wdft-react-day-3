@@ -2,15 +2,17 @@ import React, {Component} from 'react';
 import AddItem from './components/AddItem';
 import ShoppingList from './components/ShoppingList';
 
+let data = [
+  {title: 'Bread', completed: true},
+  {title: 'Milk', completed: true},
+  {title: 'Eggs', completed: false}
+];
+
 class App extends Component {
 
     state = {
-      items: [
-        {title: 'Bread', completed: true},
-        {title: 'Milk', completed: true},
-        {title: 'Eggs', completed: false}
-      ],
-      filteredItems: []
+      items: data,
+      filteredItems: data
     }
 
     handleAddItem = (e) => {
@@ -32,18 +34,19 @@ class App extends Component {
       })
 
       this.setState({
-        items: newItems
+        items: newItems,
+        filteredItems: newItems,
       })
     }
 
     handleDeleteItem = (itemName) => {
-    
         let newItems = this.state.items.filter((item) => {
             return item.title !== itemName
         })
 
         this.setState({
-          items: newItems
+          items: newItems,
+          filteredItems: newItems,
         })
     }
 
