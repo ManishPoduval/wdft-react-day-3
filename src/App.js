@@ -1,18 +1,33 @@
 import React, {Component} from 'react';
 import AddItem from './components/AddItem';
 import ShoppingList from './components/ShoppingList';
-
-let data = [
-  {title: 'Bread', completed: true},
-  {title: 'Milk', completed: true},
-  {title: 'Eggs', completed: false}
-];
+import axios from 'axios'
+import Loading from './components/Loading'
+import 'bootstrap/dist/css/bootstrap.css'
 
 class App extends Component {
 
     state = {
-      items: data,
-      filteredItems: data
+      items: [],
+      filteredItems: [],
+    }
+
+    componentDidMount(){
+       console.log('Component Mounted App.js')
+       setTimeout(() => {
+          axios.get('https://jsonplaceholder.typicode.com/todos')
+          .then((res) => {
+              console.log(res.data)
+              this.setState({
+                items: res.data,
+                filteredItems: res.data
+              })
+          })
+       }, 2000)
+    }
+
+    componentDidUpdate() {
+        console.log('Something was updated App.js')
     }
 
     handleAddItem = (e) => {
@@ -49,7 +64,7 @@ class App extends Component {
           filteredItems: newItems,
         })
     }
-
+ 
     handleFilter = (event) => {
         let inp = event.target.value //Bre
         let newItems = this.state.items.filter((item) => {
@@ -62,6 +77,15 @@ class App extends Component {
     }
 
     render(){
+      console.log('Inside render App.js')
+
+      if (!this.state.items.length){
+        return (
+          <Loading />
+        )
+      }
+
+
       return (
         <>
          <AddItem 

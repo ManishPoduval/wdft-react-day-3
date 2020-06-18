@@ -1,26 +1,29 @@
 import React from 'react';
 
-export default function ShoppingItem(props){
 
-    let myStyle ={
-        border: '1px solid black',
-        margin: '20px',
-        padding: '10px',
-        width: '200px',
+export default class ShoppingItem extends React.Component {
+
+    componentWillUnmount(){
+        console.log('Component is Unmounting ShoppingItem')
     }
 
-    let pStyle = {
-        textDecoration: props.shoppingItem.completed ? 'line-through': ''
-    }
-
-    return (
-        <div  style={myStyle}>
-            <p name="item" style={pStyle}>{props.shoppingItem.title}</p>
-            <div>
-                <button name="check" onClick={() => {props.onCheck(props.shoppingItem.title)}}>Check</button>
-                <button onClick={() => {props.onDelete(props.shoppingItem.title)}}>Delete</button>
-
+    render(){
+        let myStyle ={
+            width: '200px',
+            margin: '20px',
+        }
+    
+        let pStyle = {
+            textDecoration: this.props.shoppingItem.completed ? 'line-through': ''
+        }
+        return (
+            <div className="card" style={myStyle}>
+                <div className="card-body">
+                <h5 className="card-title" style={pStyle}>{this.props.shoppingItem.title}</h5>
+                <button type="button" className="btn btn-primary"  name="check" onClick={() => {this.props.onCheck(this.props.shoppingItem.title)}}>Check</button>
+                <button type="button" className="btn btn-danger" onClick={() => {this.props.onDelete(this.props.shoppingItem.title)}}>Delete</button>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
